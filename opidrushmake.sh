@@ -7,7 +7,6 @@ echo "###################################################"
 echo ""
 
 echo "## Site"
-read -p "Install folder : " folder
 read -p "Site name : " sitename
 read -p "Site mail : " sitemail
 read -p "Site language (fr, en) : " lang
@@ -34,10 +33,11 @@ echo "Processing drush make ..."
 echo ""
 
 
-drush make https://raw.github.com/opi/opiDrushMake/master/opidrushmake.make $folder  --translations=$lang --force-complete --prepare-install
+#~ drush make https://raw.github.com/opi/opiDrushMake/master/opidrushmake.make .  --translations=$lang --force-complete --prepare-install
+drush make https://raw.github.com/opi/opiDrushMake/master/opidrushmake.make .  --force-complete --prepare-install
 
-#~ Go to folder, chmod "site/default" ...
-cd $folder && chmod -R 777 sites/default/files && mkdir sites/files && chmod -R 777 sites/files && chmod 777 sites/default/settings.php
+#~ chmod "site/default" ...
+chmod -R 777 sites/default/files && mkdir sites/files && chmod -R 777 sites/files && chmod 777 sites/default/settings.php
 
 echo "Done."
 echo ""
@@ -49,3 +49,9 @@ drush site-install -y $siteprofile --db-url="mysql://$dbuser:$dbpass@$dbhost:$db
 #~ (--sites-subdir=SITE_FOLDER)
 
 echo "Done."
+echo ""
+echo "Update translations ..."
+echo ""
+drush l10n-update
+
+echo "All done, visit your site !"
